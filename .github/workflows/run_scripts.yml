@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install gspread pandas selenium chromedriver-autoinstaller
+          pip install gspread pandas selenium chromedriver-autoinstaller openpyxl
 
       - name: Run Selenium script
         env:

@@ -1,0 +1,27 @@
+name: Run Python Scripts
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # Executa todos os dias ao meio-dia UTC
+
+jobs:
+  run-scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install gspread pandas selenium
+
+      - name: Run Selenium script
+        run: python path/to/turma2_script_selenium.py
+
+      - name: Run Google Sheets script
+        run: python path/to/turma2_script_planilha.py

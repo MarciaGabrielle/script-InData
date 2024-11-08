@@ -6,7 +6,7 @@ import json
 import os
 
 # Carregar credenciais a partir do secret armazenado como uma variável de ambiente
-credentials_json = os.getenv("GOOGLE_CREDENTIALS_JSON")  # Nome do secret no GitHub
+credentials_json = os.getenv("CREDENTIALS_JSON_CONTENT")  # Nome do secret no GitHub
 creds_dict = json.loads(credentials_json)
 creds = Credentials.from_service_account_info(creds_dict)
 

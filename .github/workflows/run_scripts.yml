@@ -1,4 +1,4 @@
-name: Run Google Sheets Script
+name: Run Selenium and Google Sheets Scripts
 
 on:
   schedule:
@@ -16,11 +16,26 @@ jobs:
         with:
           python-version: '3.x'  # Define a versão do Python
 
+      - name: Install Chrome Driver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
+          sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+
       - name: Install dependencies
         run: |
-          pip install gspread pandas  # Instala as dependências
+          pip install gspread pandas selenium
 
-      - name: Run script
+      - name: Run Selenium script
         env:
-          GOOGLE_CREDENTIALS_JSON: ${{ secrets.CREDENTIALS_JSON_CONTENT }}
-        run: python turma1_script_planilha.py  # Executa o script
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: python script-turma2.py
+
+      - name: Upload Downloaded File
+        uses: actions/upload-artifact@v2
+        with:
+          name: turma2_planilha_notas.xlsx
+          path: /github/workspace/turma2_planilha_notas.xlsx

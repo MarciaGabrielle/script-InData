@@ -1,6 +1,6 @@
 # script-turma2.py
 
-import chromedriver_autoinstaller  # Adiciona o auto-instalador do ChromeDriver
+import chromedriver_autoinstaller
 import os
 import time
 from selenium import webdriver
@@ -54,12 +54,16 @@ driver.get('https://ensino.nead.ufrr.br/ava/grade/export/xls/index.php?id=1735')
 # Aguardar até que o botão de download esteja clicável e clique nele
 download_button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, 'id_submitbutton')))
 download_button.click()
+print("Botão de download clicado, aguardando o download do arquivo.")
 
-# Verificar se o arquivo foi baixado, repetindo a verificação por até 30 segundos
-download_wait_time = 10
+# Aumentar o tempo de espera para o download
+download_wait_time = 30  # tempo de espera aumentado para 30 segundos
 download_file_path = os.path.join(download_dir, "InData - Turma02 Notas.xlsx")
+
+# Verificar se o arquivo foi baixado, repetindo a verificação até o tempo limite
 for _ in range(download_wait_time):
     if os.path.exists(download_file_path):
+        print("Arquivo de download encontrado.")
         break
     time.sleep(1)
 else:

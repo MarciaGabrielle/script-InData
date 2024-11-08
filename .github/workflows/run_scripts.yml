@@ -7,6 +7,7 @@ on:
     - cron: '0 8 * * *'    # Executa às 8h UTC
     - cron: '0 12 * * *'   # Executa ao meio-dia UTC
     - cron: '0 16 * * *'   # Executa às 16h UTC
+    - cron: '0 20 * * *'
   workflow_dispatch:       # Permite execução manual
 
 jobs:

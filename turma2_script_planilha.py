@@ -1,19 +1,16 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
-from datetime import datetime  # Para obter a data e horário atual
+from datetime import datetime
+import json
+import os
 
-# Caminho para o arquivo de credenciais (JSON) 
-CREDENTIALS_FILE = 'C:/Users/gabyb/Downloads/script-indata-d96fd3a627eb.json'
+# Carregar credenciais a partir do secret armazenado como uma variável de ambiente
+credentials_json = os.getenv("GOOGLE_CREDENTIALS_JSON")  # Nome do secret no GitHub
+creds_dict = json.loads(credentials_json)
+creds = Credentials.from_service_account_info(creds_dict)
 
-# Definir o escopo necessário para acessar o Google Sheets
-SCOPE = ["https://spreadsheets.google.com/feeds", 
-         "https://www.googleapis.com/auth/spreadsheets",
-         "https://www.googleapis.com/auth/drive.file", 
-         "https://www.googleapis.com/auth/drive"]
-
-# Autenticação com a conta de serviço
-creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=SCOPE)
+# Autenticar com o Google Sheets
 client = gspread.authorize(creds)
 
 # ID da planilha do Google Sheets que queremos acessar
@@ -27,7 +24,7 @@ worksheet = sheet.worksheet('SCRIPT-TURMA2')
 worksheet.clear()
 
 # Carregar o arquivo Excel com as notas para o pandas
-df_local = pd.read_excel('C:/Users/gabyb/Downloads/turma2_planilha_notas.xlsx')
+df_local = pd.read_excel('turma2_planilha_notas.xlsx')  # Certifique-se de que o arquivo esteja no repositório ou em um local acessível
 
 # Converter valores para strings para evitar problemas com JSON
 df_local = df_local.astype(str)
@@ -35,7 +32,7 @@ df_local = df_local.astype(str)
 # Transformar os dados do DataFrame em uma lista de listas
 data = [df_local.columns.values.tolist()] + df_local.values.tolist()
 
-# Escrever os dados no Google Sheets a partir da célula A1 (ajustando a ordem dos argumentos)
+# Escrever os dados no Google Sheets a partir da célula A1
 worksheet.update(range_name='A1', values=data)
 
 # Obter a data e horário atual formatados

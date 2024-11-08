@@ -35,4 +35,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: turma2_planilha_notas.xlsx
-          path: /github/workspace/turma2_planilha_notas.xlsx
+          path: ${{ github.workspace }}/turma2_planilha_notas.xlsx  # Atualizado para o caminho correto

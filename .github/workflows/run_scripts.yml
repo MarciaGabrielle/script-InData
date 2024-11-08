@@ -1,27 +1,26 @@
-name: Run Python Scripts
+name: Run Google Sheets Script
 
 on:
   schedule:
-    - cron: '0 12 * * *' # Executa todos os dias ao meio-dia UTC
+    - cron: '0 12 * * *'  # Executa todos os dias ao meio-dia UTC
 
 jobs:
   run-scripts:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # Baixa o código do repositório
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.x'  # Define a versão do Python
 
       - name: Install dependencies
         run: |
-          pip install gspread pandas selenium
+          pip install gspread pandas  # Instala as dependências
 
-      - name: Run Selenium script
-        run: python path/to/script_turma2.py
-
-      - name: Run Google Sheets script
-        run: python path/to/turma2_script_planilha.py
+      - name: Run script
+        env:
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.CREDENTIALS_JSON_CONTENT }}
+        run: python turma1_script_planilha.py  # Executa o script

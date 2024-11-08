@@ -21,7 +21,7 @@ jobs:
           pip install gspread pandas selenium
 
       - name: Run Selenium script
-        run: python path/to/turma2_script_selenium.py
+        run: python path/to/script_turma2.py
 
       - name: Run Google Sheets script
         run: python path/to/turma2_script_planilha.py

@@ -1,7 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import os
 
@@ -38,13 +38,15 @@ data = [df_local.columns.values.tolist()] + df_local.values.tolist()
 # Escrever os dados no Google Sheets a partir da célula A1
 worksheet.update(range_name='A1', values=data)
 
-# Obter a data e horário atual formatados
-data_atualizacao = datetime.now().strftime('Última Atualização: %Y-%m-%d %H:%M:%S')
+# Obter a data e horário atual em UTC e converter para o horário de Brasília
+data_atualizacao_utc = datetime.utcnow()
+data_atualizacao_brasilia = data_atualizacao_utc - timedelta(hours=4)
+data_atualizacao_formatada = data_atualizacao_brasilia.strftime('Última Atualização: %Y-%m-%d %H:%M:%S')
 
 # Selecionar a aba onde a data e hora serão atualizadas
 status_worksheet = sheet.worksheet('turma2-status-alunos')
 
 # Atualizar a célula W1 com a data e hora de atualização
-status_worksheet.update('W1', [[data_atualizacao]])
+status_worksheet.update('W1', [[data_atualizacao_formatada]])
 
 print("Dados carregados com sucesso na aba 'NOTAS-TESTE' e data e hora de atualização adicionadas em 'turma2-status-alunos'!")

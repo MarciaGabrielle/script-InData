@@ -31,8 +31,13 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
         run: python script-turma2.py
 
+      - name: Run Google Sheets Update Script
+        env:
+          CREDENTIALS_JSON_CONTENT: ${{ secrets.CREDENTIALS_JSON_CONTENT }}
+        run: python turma2_script_planilha.py
+
       - name: Upload Downloaded File
         uses: actions/upload-artifact@v3
         with:
           name: turma2_planilha_notas.xlsx
-          path: ${{ github.workspace }}/turma2_planilha_notas.xlsx  # Atualizado para o caminho correto
+          path: ${{ github.workspace }}/turma2_planilha_notas.xlsx

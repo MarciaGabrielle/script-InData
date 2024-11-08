@@ -5,10 +5,13 @@ from datetime import datetime
 import json
 import os
 
+# Definir o escopo necessário para acessar o Google Sheets
+SCOPE = ["https://www.googleapis.com/auth/spreadsheets"]
+
 # Carregar credenciais a partir do secret armazenado como uma variável de ambiente
 credentials_json = os.getenv("CREDENTIALS_JSON_CONTENT")  # Nome do secret no GitHub
 creds_dict = json.loads(credentials_json)
-creds = Credentials.from_service_account_info(creds_dict)
+creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPE)
 
 # Autenticar com o Google Sheets
 client = gspread.authorize(creds)

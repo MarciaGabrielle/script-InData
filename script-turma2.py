@@ -12,8 +12,8 @@ from selenium.webdriver.common.keys import Keys
 # Instala automaticamente a versão correta do ChromeDriver
 chromedriver_autoinstaller.install()
 
-# Diretório de download temporário para o GitHub Actions
-download_dir = "/github/workspace"
+# Diretório de download temporário usando a variável de ambiente do GitHub Actions
+download_dir = os.getenv("GITHUB_WORKSPACE")  # Usa o diretório de trabalho correto
 
 # Configurações para o Chrome WebDriver
 chrome_options = webdriver.ChromeOptions()

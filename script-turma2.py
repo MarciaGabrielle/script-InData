@@ -20,6 +20,8 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--window-size=1920,1080")
+chrome_options.add_argument("--disable-gpu")
 chrome_options.add_experimental_option("prefs", {
     "download.default_directory": download_dir,
     "download.prompt_for_download": False,
@@ -57,7 +59,7 @@ download_button.click()
 print("Botão de download clicado, aguardando o download do arquivo.")
 
 # Aumentar o tempo de espera para o download
-download_wait_time = 30  # tempo de espera aumentado para 30 segundos
+download_wait_time = 60  # tempo de espera aumentado para 60 segundos
 download_file_path = os.path.join(download_dir, "InData - Turma02 Notas.xlsx")
 
 # Verificar se o arquivo foi baixado, repetindo a verificação até o tempo limite
@@ -67,7 +69,9 @@ for _ in range(download_wait_time):
         break
     time.sleep(1)
 else:
-    print("Erro: Arquivo de download não encontrado.")
+    # Se o arquivo não for encontrado, listar todos os arquivos no diretório de download
+    print("Erro: Arquivo de download não encontrado. Listando arquivos no diretório de downloads:")
+    print(os.listdir(download_dir))
     driver.quit()
     exit()
 

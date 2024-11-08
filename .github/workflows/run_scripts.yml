@@ -6,6 +6,7 @@ on:
     - cron: '0 0 * * *'  # Executa à meia-noite UTC
     - cron: '0 8 * * *'  # Executa às 6h UTC
     - cron: '0 12 * * *' # Executa ao meio-dia UTC
+    - cron: '0 16 * * *'
     - cron: '0 17 * * *' # Executa às 18h UTC
 
 jobs:
